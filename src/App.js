@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
@@ -22,13 +21,12 @@ function App() {
   }, [isData]);
 
   if (fetching) {
-    return <div>Loading</div>;
+    return <div className="App App-header">Loading...</div>;
   }
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{todo.title};</p>
+        <p>Fetched data from API: {todo.title}</p>
         <p>
           Made by
           <a
