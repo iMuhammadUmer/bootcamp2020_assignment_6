@@ -2,43 +2,44 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  let data = { title: "Title" };
-  const [todo, setTodo] = useState(data);
+  const [repos, setRepos] = useState([{}]);
   const [fetching, setFetching] = useState(false);
-  const [isData, setData] = useState(false);
+
   useEffect(() => {
-    async function fetchData() {
+    async function getRepos() {
       setFetching(true);
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos/1"
+        "https://api.github.com/users/imuhammadumer/repos"
       );
-      let data2 = await response.json();
-      setTodo(data2);
+      const data = await response.json();
       setFetching(false);
-      console.log("data", data);
+      setRepos(data);
     }
-    fetchData();
-  }, [isData]);
+    getRepos();
+  }, []);
 
   if (fetching) {
     return <div className="App App-header">Loading...</div>;
   }
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Fetched data from API: {todo.title}</p>
-        <p>
-          Made by
-          <a
-            className="App-link"
-            href="https://github.com/iMuhammadUmer"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Muhammad Umer
-          </a>
-        </p>
-      </header>
+    <div className="App App-header">
+      <h1>Repo names from Github</h1>
+      <ul>
+        {repos.map((repoObj, ind) => {
+          return <li key={ind}>{repoObj.name}</li>;
+        })}
+      </ul>
+      <p>
+        Made by
+        <a
+          className="App-link"
+          href="https://github.com/iMuhammadUmer"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Muhammad Umer
+        </a>
+      </p>
     </div>
   );
 }
